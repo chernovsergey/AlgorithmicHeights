@@ -9,8 +9,8 @@ Project for studying basic algorithms for effective storing and searching data
 	* Hash-tables
 	* Suffix-trees
 	* B-trees
-	* Deep searh
-	* Depth search
+	* Depth-first search
+	* Breadth-first search
 	* Short paths
 	* Maximal flows
 	* Minimum spanning trees
