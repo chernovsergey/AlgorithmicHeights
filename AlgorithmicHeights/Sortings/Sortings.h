@@ -57,12 +57,12 @@ void QuickSort(T* array, int N){
     if( i < N) QuickSort(array + i, N - i);
 }
 
-void HeapSort(){
-
-}
-
 void PatienceSort(){
 
 }
 
 #endif // SORTINGS_H
+
+void HeapSort(){
+
+}

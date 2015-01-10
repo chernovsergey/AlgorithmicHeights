@@ -28,7 +28,6 @@ void show(T *x, int size){
     cout << endl << endl;
 }
 
-
 int main()
 {
    array<float, 8> A;
