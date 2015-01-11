@@ -40,7 +40,10 @@ int main()
    MergeSort(A.data(), 0, 7);
    assert(true == is_sorted(A.begin(),A.end()));
 
+   fill(A.data(), A.size());
+   HeapSort(A.data(), 7);
+   assert(true == is_sorted(A.begin(), A.end()));
 
-    return 0;
+   return 0;
 }
 

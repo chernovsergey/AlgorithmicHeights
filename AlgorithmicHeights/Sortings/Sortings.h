@@ -1,5 +1,6 @@
 #ifndef SORTINGS_H
 #define SORTINGS_H
+#include "Heaps/BinaryHeap.h"
 
 template<typename T>
 void Merge(T* array, int left, int mid, int right, int size){
@@ -61,8 +62,13 @@ void PatienceSort(){
 
 }
 
-#endif // SORTINGS_H
-
-void HeapSort(){
-
+template<typename T>
+void HeapSort(T* array, int N){
+    BinaryHeap<T> bheap(array, N);
+    for(int i = N; i > 0; i--){
+        array[i] = bheap.pop();
+        bheap.heapify(0);
+    }
 }
+
+#endif // SORTINGS_H
