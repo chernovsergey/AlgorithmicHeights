@@ -3,8 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += c++11
+CONFIG += thread
 SOURCES += main.cpp
-
 HEADERS += \
     Lists/List.h \
     Sortings/Sortings.h \

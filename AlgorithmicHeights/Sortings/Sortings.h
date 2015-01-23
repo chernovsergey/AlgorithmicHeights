@@ -1,17 +1,17 @@
 #ifndef SORTINGS_H
 #define SORTINGS_H
 #include "Heaps/BinaryHeap.h"
+#include <thread>
+#include <future>
 
 template<typename T>
 void Merge(T* array, int left, int mid, int right, int size){
     T *result = new T[size];
     int i = 0, j = 0;
 
-
     for(i = mid + 1; i > left; i--){
         result[i-1] = array[i-1];
     }
-
 
     for(j = mid; j < right; j++){
         result[right + mid - j] = array[j+1];
@@ -61,6 +61,7 @@ void QuickSort(T* array, int N){
 void PatienceSort(){
 
 }
+
 
 template<typename T>
 void HeapSort(T* array, int N){

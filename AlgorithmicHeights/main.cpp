@@ -4,6 +4,7 @@
 #include <array>
 #include <algorithm>
 #include <assert.h>
+#include <thread>
 
 #include "Sortings/Sortings.h"
 #include "Lists/List.h"
@@ -30,20 +31,36 @@ void show(T *x, int size){
 
 int main()
 {
-   array<float, 8> A;
+//   array<float, 10> A;
 
-   fill(A.data(), A.size());
-   QuickSort(A.data(), 7);
-   assert(true == is_sorted(A.begin(),A.end()));
+//   fill(A.data(), A.size());
+//   QuickSort(A.data(), 9);
+//   assert(true == is_sorted(A.begin(),A.end()));
 
-   fill(A.data(), A.size());
-   MergeSort(A.data(), 0, 7);
-   assert(true == is_sorted(A.begin(),A.end()));
+//   fill(A.data(), A.size());
+//   MergeSort(A.data(), 0, 7);
+//   assert(true == is_sorted(A.begin(),A.end()));
 
-   fill(A.data(), A.size());
-   HeapSort(A.data(), 7);
-   assert(true == is_sorted(A.begin(), A.end()));
+//   fill(A.data(), A.size());
+//   HeapSort(A.data(), 7);
+//   assert(true == is_sorted(A.begin(), A.end()));
 
+   LinkedList<int> list;
+   list.push_back(13);
+   list.push_back(12);
+   list.push_back(11);
+   list.push_back(10);
+   list.push_front(14);
+   list.push_front(15);
+   list.printMe();
+
+   list.pop_front();
+   list.pop_back();
+   list.printMe();
+
+   list.push_back(9);
+   list.push_front(16);
+   list.printMe();
    return 0;
 }
 
