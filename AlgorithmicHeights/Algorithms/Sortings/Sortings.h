@@ -1,6 +1,6 @@
 #ifndef SORTINGS_H
 #define SORTINGS_H
-#include "Heaps/BinaryHeap.h"
+#include "DataStructures/Heaps/BinaryHeap.h"
 #include <thread>
 #include <future>
 
@@ -58,11 +58,6 @@ void QuickSort(T* array, int N){
     if( i < N) QuickSort(array + i, N - i);
 }
 
-void PatienceSort(){
-
-}
-
-
 template<typename T>
 void HeapSort(T* array, int N){
     BinaryHeap<T> bheap(array, N);
@@ -72,4 +67,13 @@ void HeapSort(T* array, int N){
     }
 }
 
+template<typename T>
+void InsertionSort(T* array, int N){
+    if(N < 2) return;
+    for( int i = 1; i < N; i++){
+        for(int j = i; j > 0 && array[j-1] > array[j]; j--){
+            std::swap(array[j-1], array[j]);
+        }
+    }
+}
 #endif // SORTINGS_H

@@ -76,13 +76,40 @@ class DoubleLinkedList{
       shared_ptr<Node> next;
       shared_ptr<Node> prev;
       T value;
-      Node(T _val, auto _prev, auto _next){
+      Node(T _val, auto _prev = 0, auto _next = 0){
           this->value = _val;
           this->prev = _prev;
           this->next = _next;
       }
-
-
     };
+
+    shared_ptr<Node> head;
+    shared_ptr<Node> tail;
+
+    DoubleLinkedList(){}
+
+    void printMe(){
+        shared_ptr<Node> p;
+        for(p = head; p != 0; p = p->next){
+            cout <<  p->value << " ";
+        }
+        cout << endl;
+    }
+
+    void push_back(T val){
+//        shared_ptr<Node> new_element(new Node(val, tail, 0));
+
+//        if(head == 0){
+//            head = new_element;
+//            return;
+//        }
+
+    }
+
+    void push_front(T val){
+        shared_ptr<Node> new_element(new Node(val, 0, head));
+        head->prev = new_element;
+        head = new_element;
+    }
 };
 #endif // LIST_H

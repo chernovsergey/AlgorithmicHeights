@@ -8,5 +8,9 @@ SOURCES += main.cpp
 HEADERS += \
     Lists/List.h \
     Sortings/Sortings.h \
-    Heaps/BinaryHeap.h
+    Heaps/BinaryHeap.h \
+    Algorithms/Sortings/Sortings.h \
+    DataStructures/Heaps/BinaryHeap.h \
+    DataStructures/Lists/List.h \
+    Algorithms/OrderStatistics/OrderStatistics.h
 

@@ -4,10 +4,10 @@
 #include <array>
 #include <algorithm>
 #include <assert.h>
-#include <thread>
 
-#include "Sortings/Sortings.h"
-#include "Lists/List.h"
+#include "Algorithms/Sortings/Sortings.h"
+#include "DataStructures/Lists/List.h"
+#include "Algorithms/OrderStatistics/OrderStatistics.h"
 
 using namespace std;
 
@@ -45,22 +45,37 @@ int main()
 //   HeapSort(A.data(), 7);
 //   assert(true == is_sorted(A.begin(), A.end()));
 
-   LinkedList<int> list;
-   list.push_back(13);
-   list.push_back(12);
-   list.push_back(11);
-   list.push_back(10);
-   list.push_front(14);
-   list.push_front(15);
-   list.printMe();
+//    fill(A.data(), A.size());
+//    InsertionSort(A.data(), 10);
+//    assert(true == is_sorted(A.begin(), A.end()));
 
-   list.pop_front();
-   list.pop_back();
-   list.printMe();
+//   LinkedList<int> list;
+//   list.push_back(13);
+//   list.push_back(12);
+//   list.push_back(11);
+//   list.push_back(10);
+//   list.push_front(14);
+//   list.push_front(15);
+//   list.printMe();
 
-   list.push_back(9);
-   list.push_front(16);
-   list.printMe();
+//   list.pop_front();
+//   list.pop_back();
+//   list.printMe();
+
+//   list.push_back(9);
+//   list.push_front(16);
+//   list.printMe();
+
+//    for(int P = 0; P < 9; P++){
+//        array<float, 10> A;
+//        fill(A.data(), A.size());
+//        auto B = A;
+//        auto kth = findOrderStatistics(A.data(), 0, 9, P);
+//        std::nth_element(B.begin(), B.begin()+P, B.end());
+//        bool result = false;
+//        if(kth == B[P])result = true;
+//        cout << result << endl;
+//    }
    return 0;
 }
 
