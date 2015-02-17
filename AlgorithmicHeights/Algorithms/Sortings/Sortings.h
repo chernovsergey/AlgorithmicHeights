@@ -60,11 +60,8 @@ void QuickSort(T* array, int N){
 
 template<typename T>
 void HeapSort(T* array, int N){
-    BinaryHeap<T> bheap(array, N);
-    for(int i = N; i > 0; i--){
-        array[i] = bheap.pop();
-        bheap.heapify(0);
-    }
+    MaxBinaryHeap<T> bheap(array, N);
+    for(int i = N; i > 0; i--)array[i] = bheap.pop();
 }
 
 template<typename T>
@@ -76,4 +73,5 @@ void InsertionSort(T* array, int N){
         }
     }
 }
+
 #endif // SORTINGS_H

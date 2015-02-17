@@ -4,7 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += c++11
 CONFIG += thread
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    test.cpp
 HEADERS += \
     Lists/List.h \
     Sortings/Sortings.h \
@@ -12,5 +13,6 @@ HEADERS += \
     Algorithms/Sortings/Sortings.h \
     DataStructures/Heaps/BinaryHeap.h \
     DataStructures/Lists/List.h \
-    Algorithms/OrderStatistics/OrderStatistics.h
+    Algorithms/OrderStatistics/OrderStatistics.h \
+    Algorithms/Sortings/Partials.h
 

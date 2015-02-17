@@ -4,19 +4,21 @@
 #include <memory>
 
 template<typename T>
-class BinaryHeap{
+class MaxBinaryHeap{
 
     std::vector<T> data;
 
 public:
-    BinaryHeap(T* array, int size){
+    MaxBinaryHeap(T* array, int size){
+        //Make heap procedure
         data.assign(array, array+size+1);
         for (int i = size / 2; i >= 0; i--){
-           heapify(i);
+           max_heapify(i);
         }
     }
 
-    void heapify(int i){
+    //Sift up. O(logN)
+    void max_heapify(int i){
         int left_child;
         int right_child;
         int largest_child;
@@ -45,7 +47,8 @@ public:
         }
     }
 
-    void push(T elem){ //pushed an element to heap
+    //Insert element to heap
+    void push(T elem){
         data.push_back(elem);
         int i = data.size() - 1;
         int parent = (i-1)/2;
@@ -57,14 +60,42 @@ public:
         }
     }
 
-    T pop(){ //returned max element
+    //Extracting max element
+    T pop(){
         int size = data.size();
         T result = data[0];
         data[0] = data[size - 1];
         data.erase(data.begin()+size-1); //removing data[size-1]
+        max_heapify(0);
         return result;
     }
 
 };
 
+
+template<typename T>
+class MinBinaryHeap{
+
+    std::vector<T> data;
+
+public:
+    MinBinaryHeap(T* array, int size){
+        //Make heap procedure
+        data.assign(array, array+size+1);
+        for (int i = size / 2; i >= 0; i--){
+           min_heapify(i);
+        }
+    }
+
+    //Sift up. O(logN)
+    void min_heapify(int i){}
+
+
+    //Insert element to heap
+    void push(T elem){}
+
+
+    // Extracting min element
+    T pop(){}
+};
 #endif // BINARYHEAP_H

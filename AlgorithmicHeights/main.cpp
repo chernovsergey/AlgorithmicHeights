@@ -38,11 +38,11 @@ int main()
 //   assert(true == is_sorted(A.begin(),A.end()));
 
 //   fill(A.data(), A.size());
-//   MergeSort(A.data(), 0, 7);
+//   MergeSort(A.data(), 0, 9);
 //   assert(true == is_sorted(A.begin(),A.end()));
 
 //   fill(A.data(), A.size());
-//   HeapSort(A.data(), 7);
+//   HeapSort(A.data(), 9);
 //   assert(true == is_sorted(A.begin(), A.end()));
 
 //    fill(A.data(), A.size());
@@ -70,7 +70,7 @@ int main()
 //        array<float, 10> A;
 //        fill(A.data(), A.size());
 //        auto B = A;
-//        auto kth = findOrderStatistics(A.data(), 0, 9, P);
+//        auto kth = find_nth_element(A.data(), 0, 9, P);
 //        std::nth_element(B.begin(), B.begin()+P, B.end());
 //        bool result = false;
 //        if(kth == B[P])result = true;
