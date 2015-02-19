@@ -4,10 +4,12 @@
 #include <array>
 #include <algorithm>
 #include <assert.h>
+#include <string>
 
 #include "Algorithms/Sortings/Sortings.h"
 #include "DataStructures/Lists/List.h"
 #include "Algorithms/OrderStatistics/OrderStatistics.h"
+#include "DataStructures/Hashing/HashTable.h"
 
 using namespace std;
 
@@ -29,53 +31,32 @@ void show(T *x, int size){
     cout << endl << endl;
 }
 
+
+int hash_int(int value, int size){
+    return value % size;
+}
+
+int hash_double(double value, int size){
+    return ((int)value) % size;
+
+}
+
+int hash_string(string s, int size){
+    return 1;
+}
+
+
 int main()
 {
-//   array<float, 10> A;
 
-//   fill(A.data(), A.size());
-//   QuickSort(A.data(), 9);
-//   assert(true == is_sorted(A.begin(),A.end()));
-
-//   fill(A.data(), A.size());
-//   MergeSort(A.data(), 0, 9);
-//   assert(true == is_sorted(A.begin(),A.end()));
-
-//   fill(A.data(), A.size());
-//   HeapSort(A.data(), 9);
-//   assert(true == is_sorted(A.begin(), A.end()));
-
-//    fill(A.data(), A.size());
-//    InsertionSort(A.data(), 10);
-//    assert(true == is_sorted(A.begin(), A.end()));
-
-//   LinkedList<int> list;
-//   list.push_back(13);
-//   list.push_back(12);
-//   list.push_back(11);
-//   list.push_back(10);
-//   list.push_front(14);
-//   list.push_front(15);
-//   list.printMe();
-
-//   list.pop_front();
-//   list.pop_back();
-//   list.printMe();
-
-//   list.push_back(9);
-//   list.push_front(16);
-//   list.printMe();
-
-//    for(int P = 0; P < 9; P++){
-//        array<float, 10> A;
-//        fill(A.data(), A.size());
-//        auto B = A;
-//        auto kth = find_nth_element(A.data(), 0, 9, P);
-//        std::nth_element(B.begin(), B.begin()+P, B.end());
-//        bool result = false;
-//        if(kth == B[P])result = true;
-//        cout << result << endl;
-//    }
-   return 0;
+    const int TABLE_SIZE = 20;
+    HasTable_Chaining<string, int> hashtable(TABLE_SIZE, &hash_string);
+    hashtable.put("fuck", 7);
+    hashtable.put("you", 17);
+    hashtable.put("bitch", 70);
+    cout << hashtable.get("fuck") << endl;
+    cout << hashtable.get("you") << endl;
+    cout << hashtable.get("bitch") << endl;
+    return 0;
 }
 

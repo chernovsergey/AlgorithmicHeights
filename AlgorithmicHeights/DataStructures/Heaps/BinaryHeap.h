@@ -69,7 +69,6 @@ public:
         max_heapify(0);
         return result;
     }
-
 };
 
 
