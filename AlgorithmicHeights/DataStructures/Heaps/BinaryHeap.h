@@ -87,14 +87,51 @@ public:
     }
 
     //Sift up. O(logN)
-    void min_heapify(int i){}
+    void min_heapify(int i){
+        int left_child;
+        int right_child;
+        int lowest_child;
+        int size = data.size();
+
+        for(;;){
+
+            left_child = 2 * i + 1;
+            right_child = 2 * i + 2;
+            lowest_child = i;
+
+            if(left_child < size && data[left_child] < data[lowest_child]){
+                lowest_child = left_child;
+            }
+
+            if(right_child < size && data[right_child] < data[lowest_child]){
+                lowest_child = right_child;
+            }
+
+            if(lowest_child == i){
+                break;
+            }
+
+            std::swap(data[i], data[lowest_child]);
+            i = lowest_child;
+        }
+    }
 
 
     //Insert element to heap
-    void push(T elem){}
+    void push(T elem){
+        data.push_back(elem);
+        min_heapify(0);
+    }
 
 
     // Extracting min element
-    T pop(){}
+    T pop(){
+        int size = data.size();
+        T result = data[0];
+        data[0] = data[size - 1];
+        data.erase(data.begin()+size-1); //removing data[size-1]
+        min_heapify(0);
+        return result;
+    }
 };
 #endif // BINARYHEAP_H

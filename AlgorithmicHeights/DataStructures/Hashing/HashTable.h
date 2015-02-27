@@ -1,15 +1,6 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-
-/*
-*   Assuming that K - record of hash table and
-*   contains the following methods:
-*       getKey()
-*       setKey()
-*       getHash()
-*/
-
 #include <list>
 #include <vector>
 #include <map>
