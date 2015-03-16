@@ -16,5 +16,7 @@ HEADERS += \
     Algorithms/OrderStatistics/OrderStatistics.h \
     Algorithms/Sortings/Partials.h \
     DataStructures/Hashing/HashTable.h \
-    DataStructures/Trees/BST.h
+    DataStructures/Trees/BST.h \
+    DataStructures/Trees/Treap.h \
+    DataStructures/Trees/Splay.h
 

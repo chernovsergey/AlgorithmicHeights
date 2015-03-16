@@ -116,13 +116,11 @@ public:
         }
     }
 
-
     //Insert element to heap
     void push(T elem){
         data.push_back(elem);
         min_heapify(0);
     }
-
 
     // Extracting min element
     T pop(){
@@ -134,4 +132,5 @@ public:
         return result;
     }
 };
+
 #endif // BINARYHEAP_H

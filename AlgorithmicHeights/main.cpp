@@ -11,6 +11,7 @@
 #include "DataStructures/Lists/List.h"
 #include "Algorithms/OrderStatistics/OrderStatistics.h"
 #include "DataStructures/Hashing/HashTable.h"
+#include "DataStructures/Trees/BST.h"
 
 using namespace std;
 
@@ -31,7 +32,6 @@ void show(T *x, int size){
     }
     cout << endl << endl;
 }
-
 
 int hash_int(int value, int size){
     return value % size;
@@ -79,6 +79,32 @@ int main()
 
     //    arr = find_num_lowest<int>(A, 8, 5);
     //    for(auto &i : arr)cout << i << " ";
+
+    BST<float> b;
+
+//    default_random_engine generator;
+//    int R = rand()/1000000;
+//    uniform_int_distribution<int> UNIFORM_X(-R, R);
+//    for(int i = 0; i < 10; i++){
+//        b.insert(UNIFORM_X(generator));
+//    }
+
+    b.insert(-1.0);
+    b.insert(-2.0);
+    b.insert(-3.0);
+    b.insert(0);
+    b.insert(1.0);
+    b.insert(2.0);
+    b.insert(3.0);
+
+    float x = 0;
+    try{
+        x = b.find(-30.0);
+        cout << "found " << x << endl;
+    }
+    catch(KeyNotFoundException& err){
+        cout << err.what() << endl;
+    }
 
     return 0;
 }

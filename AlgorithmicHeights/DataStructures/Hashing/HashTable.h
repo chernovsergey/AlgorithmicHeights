@@ -1,7 +1,6 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-#include <list>
 #include <vector>
 #include <map>
 #include <string>
