@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <assert.h>
 #include <string>
+#include <iterator>
+#include <cstring>
 
 #include "Algorithms/Sortings/Sortings.h"
 #include "Algorithms/Sortings/Partials.h"
@@ -12,6 +14,9 @@
 #include "Algorithms/OrderStatistics/OrderStatistics.h"
 #include "DataStructures/Hashing/HashTable.h"
 #include "DataStructures/Trees/BST.h"
+#include "Algorithms/Sequences/LIS_LDS.h"
+#include "Algorithms/Strings/KnuthMorrisPratt.h"
+#include "Algorithms/Strings/BoyerMoore.h"
 
 using namespace std;
 
@@ -25,87 +30,13 @@ void fill(T* x, int size){
     }
 }
 
-template<typename T>
-void show(T *x, int size){
-    for(int i = 0; i < size; i++){
-        cout << x[i] << endl;
-    }
-    cout << endl << endl;
-}
 
-int hash_int(int value, int size){
-    return value % size;
-}
-
-int hash_double(double value, int size){
-    return ((int)value) % size;
-
-}
-
-int hash_string(string s, int size){
-    return 1;
-}
 
 
 int main()
 {
+    char* source = "IHateStringsButIHaveToLove";
+    char* pattern = "ToLo";
 
-    //    const int TABLE_SIZE = 20;
-    //    HasTable_Chaining<string, int> hashtable(TABLE_SIZE, &hash_string);
-    //    hashtable.put("fuck", 7);
-    //    hashtable.put("you", 17);
-    //    hashtable.put("bitch", 70);
-    //    cout << hashtable.get("fuck") << endl;
-    //    cout << hashtable.get("you") << endl;
-    //    cout << hashtable.get("bitch") << endl;
-
-    //    int A[] = {-1,-2,-3, 0, 1, 2, -30, 4, 5};
-    //    MinBinaryHeap<int> mheap(A, 8);
-    //    cout << mheap.pop() << endl;
-    //    cout << mheap.pop() << endl;
-    //    cout << mheap.pop() << endl;
-    //    MaxBinaryHeap<int> mheap(A, 8);
-    //    cout << mheap.pop() << endl;
-    //    cout << mheap.pop() << endl;
-    //    cout << mheap.pop() << endl;
-
-
-    //    int A[] = {-1,-2,-3, 0, 1, 2, -30, 4, 5};
-
-    //    auto arr = find_num_greatest<int>(A, 8, 5);
-    //    for(auto &i : arr)cout << i << " ";
-
-    //    cout << endl << endl;
-
-    //    arr = find_num_lowest<int>(A, 8, 5);
-    //    for(auto &i : arr)cout << i << " ";
-
-    BST<float> b;
-
-//    default_random_engine generator;
-//    int R = rand()/1000000;
-//    uniform_int_distribution<int> UNIFORM_X(-R, R);
-//    for(int i = 0; i < 10; i++){
-//        b.insert(UNIFORM_X(generator));
-//    }
-
-    b.insert(-1.0);
-    b.insert(-2.0);
-    b.insert(-3.0);
-    b.insert(0);
-    b.insert(1.0);
-    b.insert(2.0);
-    b.insert(3.0);
-
-    float x = 0;
-    try{
-        x = b.find(-30.0);
-        cout << "found " << x << endl;
-    }
-    catch(KeyNotFoundException& err){
-        cout << err.what() << endl;
-    }
-
-    return 0;
+    std::cout<<boyer_moore(source, pattern);
 }
-

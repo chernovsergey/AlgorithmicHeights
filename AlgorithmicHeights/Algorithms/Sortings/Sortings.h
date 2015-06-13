@@ -1,8 +1,8 @@
 #ifndef SORTINGS_H
 #define SORTINGS_H
 #include "DataStructures/Heaps/BinaryHeap.h"
-#include <thread>
-#include <future>
+#include <memory>
+#include <vector>
 
 template<typename T>
 void Merge(T* array, int left, int mid, int right, int size){
@@ -61,7 +61,9 @@ void QuickSort(T* array, int N){
 template<typename T>
 void HeapSort(T* array, int N){
     MaxBinaryHeap<T> bheap(array, N);
-    for(int i = N; i > 0; i--)array[i] = bheap.pop();
+
+    for(int i = N; i > 0; i--)
+        array[i] = bheap.pop();
 }
 
 template<typename T>
@@ -74,9 +76,21 @@ void InsertionSort(T* array, int N){
     }
 }
 
-//void RadixSort(int* array, int N){
-//    //
-//}
+void CountSort(int* array, int min, int max, int N){
+    std::vector<int> counts(max - min + 1);
 
+    for(int i = 0; i < N; ++i){
+        counts[array[i] - min] += 1;
+    }
+
+    int fillpos = 0;
+    for(int i = min; i <= max; ++i){
+        while( counts[i - min] > 0 ){
+            array[fillpos] = i;
+            fillpos += 1;
+            counts[i - min] -= 1;
+        }
+    }
+}
 
 #endif // SORTINGS_H

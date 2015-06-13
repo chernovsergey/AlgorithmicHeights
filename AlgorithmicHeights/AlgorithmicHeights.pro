@@ -18,5 +18,9 @@ HEADERS += \
     DataStructures/Hashing/HashTable.h \
     DataStructures/Trees/BST.h \
     DataStructures/Trees/Treap.h \
-    DataStructures/Trees/Splay.h
+    DataStructures/Trees/Splay.h \
+    DataStructures/Trees/Bohr.h \
+    Algorithms/Sequences/LIS_LDS.h \
+    Algorithms/Strings/BoyerMoore.h \
+    Algorithms/Strings/KnuthMorrisPratt.h
 
