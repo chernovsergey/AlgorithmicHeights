@@ -215,3 +215,47 @@ TEST( namespace_list, test_linked_list )
     l.clear();
     EXPECT_EQ(0, l.size());
 }
+
+TEST(namespace_trees, test_bst)
+{
+    binary_search_tree<int, float> tree;
+    tree.insert(10, 10.1);
+    tree.insert(5, 5.1);
+    tree.insert(15, 15.1);
+
+    EXPECT_EQ(true, tree.contains(5));
+    EXPECT_EQ(true, tree.contains(10));
+    EXPECT_EQ(true, tree.contains(15));
+
+    tree.insert(17, 17.1);
+    tree.insert(13, 13.1);
+
+    tree.insert(7, 7.1);
+    tree.insert(3, 3.1);
+
+    EXPECT_FLOAT_EQ(17.1, tree.find(17));
+    EXPECT_FLOAT_EQ(13.1, tree.find(13));
+    EXPECT_FLOAT_EQ(7.1, tree.find(7));
+    EXPECT_FLOAT_EQ(3.1, tree.find(3));
+
+}
+
+
+TEST(namespace_hash, test_bloom_filter)
+{
+    BloomFilter<std::string> bf_big(1e6);
+    for(size_t i = 0; i < 1e6; ++i)
+    {
+        bf_big.add(std::to_string(i));
+    }
+
+    size_t count = 0;
+    for(size_t i = 2e6; i < 3e6; ++i)
+    {
+        if(bf_big.maybe_contains(std::to_string(i)))
+            count += 1;
+    }
+
+    float rate = ((float)count) / (float(1e6+(1e6/2)));
+    EXPECT_GE(0.05, rate);
+}

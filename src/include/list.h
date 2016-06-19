@@ -3,16 +3,16 @@
 
 #include <memory>
 
-// TODO emplace_back, emplace_front, begin, end, merge, sort
+// TODO merge, sort
 
 template<typename T>
 struct LinkedList
 {
         typedef T value_type;
-        typedef value_type& reference;
-        typedef value_type const& const_reference;
-        typedef value_type* pointer;
-        typedef value_type const* const_pointer;
+        typedef value_type & reference;
+        typedef value_type const & const_reference;
+        typedef value_type * pointer;
+        typedef value_type const * const_pointer;
         typedef size_t size_type;
 
     private:
@@ -20,8 +20,8 @@ struct LinkedList
 
     public:
         LinkedList()
-            : size_(0)
-            , head_(nullptr)
+            : size_( 0 )
+            , head_( nullptr )
         {}
 
         void push_back( value_type val )
@@ -55,15 +55,31 @@ struct LinkedList
         void pop_back()
         {
             if( head_ == nullptr )
+            {
                 return;
+            }
 
             if( head_->next == nullptr )
+            {
                 pop_front();
+            }
 
             auto node = move_to_end();
             node->next = nullptr;
 
             --size_;
+        }
+
+        template<typename ...Args>
+        void emplace_back( Args...args )
+        {
+            push_back( T( std::forward<Args>( args )... ) );
+        }
+
+        template<typename ...Args>
+        void emplace_fromt( Args...args )
+        {
+            push_front( T( std::forward<Args>( args ) )... );
         }
 
         size_t size() const
@@ -82,10 +98,12 @@ struct LinkedList
             size_ = 0;
         }
 
-        friend std::ostream& operator<<( std::ostream& out , LinkedList<T> list)
+        friend std::ostream & operator<<( std::ostream & out , LinkedList<T> list )
         {
             for( auto p = list.head_; p != nullptr; p = p->next )
+            {
                 out << p->value << " ";
+            }
 
             return out;
         }
@@ -94,11 +112,13 @@ struct LinkedList
         size_t size_;
         std::shared_ptr<Node> head_;
 
-        Node* move_to_end()
+        Node * move_to_end()
         {
             auto node = head_;
             while( node->next != nullptr )
+            {
                 node = node->next;
+            }
 
             return node.get();
         }

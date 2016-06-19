@@ -2,191 +2,184 @@
 #define TREE
 
 #include <memory>
+#include <stdexcept>
 
-template<typename T>
+template<typename K, typename V>
 struct binary_search_tree
 {
-        typedef T value_type;
-        typedef value_type& reference;
-        typedef value_type const& const_reference;
-        typedef value_type* pointer;
-        typedef value_type const* const_pointer;
-        typedef size_t size_type;
-
     private:
-        struct Node;
+        template<typename KEY, typename VAL>
+        struct TreeNode;
+
+        typedef TreeNode<K, V> Node;
 
     public:
-        binary_search_tree()
-            : root( nullptr )
-            , size_( 0 )
-        {}
+        binary_search_tree() = default;
 
-        void insert( T key )
+        void insert( K const & k, V const & v )
         {
-            auto new_node = std::make_shared<Node>( key );
-            std::shared_ptr<Node> parent( nullptr );
+            if( contains( k ) )
+                throw KeyExistsException();
 
-            if( empty() )
+            auto new_one = std::make_unique<Node>( k, v );
+
+            Node * nearest = traverse( k );
+            if( !nearest )
             {
-                root = new_node;
-                size_++;
+                root = std::move( new_one );
                 return;
             }
 
-            auto curr = root;
-            while( curr )
-            {
-                parent = curr;
-                if( new_node->val > curr->val )
-                    curr = curr->right;
-                else if( new_node->val < curr->val )
-                    curr = curr->left;
-                else
-                    return;
-            }
+            new_one->parent_ = nearest;
 
-            if( new_node->val < parent->val )
-                parent->left = new_node;
+            if( k > nearest->key_ )
+                nearest->insert_right( std::move( new_one ) );
             else
-                parent->right = new_node;
-
-            size_++;
+                nearest->insert_left( std::move( new_one ) );
         }
 
-        value_type find( value_type key )
+
+        void remove( K const & k )
         {
-            T result;
-            auto curr = root;
-            while( curr )
+            Node* nearest = traverse(k);
+            if(nearest->key_ != k)
+                throw KeyNotFoundException();
+
+            // only left subtree
+            if(nearest->right_ == nullptr && nearest->left_ != nullptr)
             {
-                if( key > curr->val )
-                    curr = curr->right;
-                else if( key < curr->val )
-                    curr = curr->left;
-                else if( curr->val == key )
-                {
-                    result = curr->val;
-                    return result;
-                }
+
             }
-            throw KeyNotFoundException();
-        }
 
-        void remove( value_type key )
-        {
-
-        }
-
-        binary_search_tree& operator = ( binary_search_tree rhs )
-        {
-            std::swap( size_, rhs.size_ );
-            std::swap( root, rhs.root );
-            return *this;
-        }
-
-        bool empty()
-        {
-            return size_ == 0;
-        }
-
-        void clear( std::shared_ptr<Node> const& node )
-        {
-            if( node )
+            // only right subtree
+            if(nearest->right_ != nullptr && nearest->left_ == nullptr)
             {
-                if( node->left )
-                    clear( node->left );
-                if( node->right )
-                    clear( node->right );
-                node.reset();
+
             }
-        }
 
-        T max( std::shared_ptr<Node> const& node )
-        {
-            if( node->right == nullptr )
-                return node->val;
-            max( node->right );
-        }
-
-        T min( std::shared_ptr<Node> const& node )
-        {
-            if( node->left == nullptr )
-                return node->val;
-            min( node->left );
-        }
-
-        void inOrder( std::shared_ptr<Node> const& node )
-        {
-            if( node != nullptr )
+            // if both exists:
+            // 1) find node with minimum key in the right subtree
+            // 2) switch it with the current node
+            // 3) remove that node
+            if(nearest->right_ != nullptr && nearest->left_ != nullptr)
             {
-                if( node->left )
-                    inOrder( node->left );
 
-                std::cout << node->val << std::endl;
+            }
 
-                if( node->right )
-                    inOrder( node->right );
+        }
+
+        V & find( K const & k )
+        {
+            Node * result = traverse( k );
+            if( !result || ( k != result->key_ ) )
+                throw KeyNotFoundException();
+
+            return result->val_;
+        }
+
+
+        bool contains( K const & k )
+        {
+            try
+            {
+                find( k );
+                return true;
+            }
+            catch( KeyNotFoundException & ex )
+            {
+                return false;
             }
         }
 
-        void preOrder( std::shared_ptr<Node> const& node )
+    private:
+        Node * traverse( K const & k )
         {
-            if( node != nullptr )
+            if( !root )
+                return nullptr;
+
+            Node * curr = root.get();
+            while( true )
             {
-                std::cout << node->val << std::endl;
+                if( curr->key_ == k )
+                    break;
 
-                if( node->left )
-                    inOrder( node->left );
+                Node * next = ( k > curr->key_ ) ? curr->right() : curr->left();
+                if( !next )
+                    break;
 
-                if( node->right )
-                    inOrder( node->right );
+                curr = next;
             }
+            return curr;
         }
 
-        void postOrder( std::shared_ptr<Node> const& node )
-        {
-            if( node != nullptr )
-            {
-                if( node->left )
-                    inOrder( node->left );
-
-                if( node->right )
-                    inOrder( node->right );
-
-                std::cout << node->val << std::endl;
-
-            }
-        }
-
-
-        std::shared_ptr<Node> inorderSuccessor()
-        {}
-
-        std::shared_ptr<Node> inorderPredecessor()
-        {}
 
     private:
 
-        std::shared_ptr<Node> root;
+        std::unique_ptr<Node> root;
         int size_ = 0;
 
-        struct Node
+        template<typename KEY, typename VAL>
+        struct TreeNode
         {
-            value_type val;
-            std::shared_ptr<Node> left;
-            std::shared_ptr<Node> right;
-
-            Node( value_type key ):
-                val( key ),
-                left( nullptr ),
-                right( nullptr )
+            TreeNode( KEY const & key, VAL const & val )
+                : key_( key )
+                , val_( val )
+                , parent_( nullptr )
+                , left_( nullptr )
+                , right_( nullptr )
             {}
+
+            ~TreeNode() = default;
+
+            TreeNode( TreeNode && src ) = default;
+            TreeNode & operator=( TreeNode && src ) = default;
+
+            TreeNode( const TreeNode & src ) = delete;
+            TreeNode & operator=( const TreeNode & src ) = delete;
+
+            void insert_right( std::unique_ptr<TreeNode> && ptr )
+            {
+                right_ = std::move( ptr );
+            }
+
+            void insert_left( std::unique_ptr<TreeNode> && ptr )
+            {
+                left_ = std::move( ptr );
+            }
+
+            std::unique_ptr<TreeNode> take_right()
+            {
+                return std::move( right_ );
+            }
+
+            std::unique_ptr<TreeNode> take_left()
+            {
+                return std::move( left_ );
+            }
+
+            TreeNode * right()
+            {
+                return right_.get();
+            }
+
+            TreeNode * left()
+            {
+                return left_.get();
+            }
+
+            KEY key_;
+            VAL val_;
+            TreeNode * parent_;
+            std::unique_ptr<TreeNode> left_;
+            std::unique_ptr<TreeNode> right_;
+
         };
 
-        struct KeyNotFoundException : public std::runtime_error
+        struct KeyNotFoundException
+        {};
+
+        struct KeyExistsException
         {};
 };
 
 #endif // TREE
-

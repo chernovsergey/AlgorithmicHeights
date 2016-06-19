@@ -81,10 +81,12 @@ void quicksort_stl( fwd_it begin, fwd_it end )
 {
     if( begin == end ) return;
     auto pivot = *std::next( begin, std::distance( begin, end ) / 2 );
+
     auto midle1 = std::partition( begin, end, [pivot]( auto & elem )
     {
         return elem < pivot;
     } );
+
     auto midle2 = std::partition( begin, end, [pivot]( auto & elem )
     {
         return !( pivot < elem );
@@ -128,8 +130,8 @@ void insertionsort( std::vector<T>& array )
     if( array.size() < 2 )
         return;
 
-    for( int i = 1; i < array.size(); i++ )
-        for( int j = i; j > 0 && array[j - 1] > array[j]; j-- )
+    for( size_t i = 1; i < array.size(); i++ )
+        for( size_t j = i; j > 0 && array[j - 1] > array[j]; j-- )
             std::swap( array[j - 1], array[j] );
 }
 

@@ -10,11 +10,11 @@ namespace str
     using std::string;
     using std::vector;
 
-    const char* alphas_only = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    const char* alphanumeric = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    const char* full = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#@$%^&*()_+=-`?/\\{}~";
+    const char * alphas_only = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const char * alphanumeric = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const char * full = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#@$%^&*()_+=-`?/\\{}~";
 
-    string random_string( size_t length, const char* alphabet = alphas_only )
+    string random_string( size_t length, const char * alphabet = alphas_only )
     {
         srand( time( NULL ) );
         auto rnd_char = [ = ]()
@@ -29,17 +29,19 @@ namespace str
     }
 
 
-    string random_text( size_t count_words, const char* alphabet = full )
+    string random_text( size_t count_words, const char * alphabet = full )
     {
         string result = random_string( rand() % 20, alphabet );
 
         for( size_t i = 0; i < count_words; ++i )
+        {
             result += " " + random_string( rand() % 20, alphabet );
+        }
 
         return result;
     }
 
-    vector<string> split_by( string const& s, string const& delim )
+    vector<string> split_by( string const & s, string const & delim )
     {
         size_t cur = 0;
         size_t nxt = 0;
@@ -54,35 +56,43 @@ namespace str
         return result;
     }
 
-    vector<string> split_by( const string& s, char delim )
+    vector<string> split_by( const string & s, char delim )
     {
         std::stringstream ss( s );
         string item;
         vector<string> tokens;
         while( getline( ss, item, delim ) )
+        {
             tokens.emplace_back( item );
+        }
 
         return tokens;
     }
 
 
     // TODO find out with passing tmp objects and reference
-    string trim( string& s )
+    string trim( string & s )
     {
         // trim from left
         auto it = s.begin();
-        while( *it == ' ' ) ++it;
+        while( *it == ' ' )
+        {
+            ++it;
+        }
         s.erase( s.begin(), it );
 
         // TODO : make trim right using iterators
         size_t i = s.length() - 1;
-        while( s[i] == ' ' ) i -= 1;
+        while( s[i] == ' ' )
+        {
+            i -= 1;
+        }
         s.replace( i + 1, s.length(), "" );
 
         return s;
     }
 
-    vector<string> tokenize( string& s, string const& delim )
+    vector<string> tokenize( string & s, string const & delim )
     {
         auto trimmer = []( string token ) -> string
         {
@@ -93,32 +103,40 @@ namespace str
 
         vector<string> res = split_by( s, delim );
         for( auto & token : res )
+        {
             token = trimmer( token );
+        }
 
         return res;
     }
 
-    bool endwith( string& s, const string& suffix )
+    bool endwith( string & s, const string & suffix )
     {
         if( suffix.size() > s.size() )
+        {
             return false;
+        }
 
         auto suf_it = suffix.rbegin();
         auto str_it = s.rbegin();
         for( ; suf_it != suffix.rend(); ++suf_it, ++str_it )
             if( *suf_it != *str_it )
+            {
                 return false;
+            }
 
         return true;
     }
 
-    bool startwith( string& s, string const& prefix )
+    bool startwith( string & s, string const & prefix )
     {
         auto str_it = s.begin();
         auto prf_it = prefix.begin();
         for( ; prf_it != prefix.end(); ++str_it, ++prf_it )
             if( *str_it != *prf_it )
+            {
                 return false;
+            }
 
         return true;
     }
@@ -136,7 +154,9 @@ namespace str
             int pos = pi[i - 1];
 
             while( pos != -1 && pattern[pos] != pattern[i - 1] )
+            {
                 pos = pi[pos];
+            }
 
             pi[i] = pos + 1;
         }
@@ -147,13 +167,17 @@ namespace str
         while( str_pos < SSIZE )
         {
             while( pat_pos != -1 && ( pat_pos == PSIZE || pattern[pat_pos] != str[str_pos] ) )
+            {
                 pat_pos = pi[pat_pos];
+            }
 
             ++str_pos;
             ++pat_pos;
 
             if( pat_pos == PSIZE )
+            {
                 matches.emplace_back( str_pos - PSIZE );
+            }
         }
         return matches;
     }
