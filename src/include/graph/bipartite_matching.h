@@ -1,14 +1,12 @@
-#ifndef GRAPH
-#define GRAPH
+#ifndef BIPARTITE_MATCHING_H
+#define BIPARTITE_MATCHING_H
 
-#include <queue>
 #include <vector>
-#include <array>
-using std::vector;
-using std::queue;
-using std::array;
 
-bool kuhn_max_matching( int src, const vector<vector<int>>& graph, vector<int>& matching, vector<bool>& visited )
+bool kuhn_max_matching( int src,
+                        const std::vector<std::vector<int>> & graph,
+                        std::vector<int> & matching,
+                        std::vector<bool> & visited )
 {
     if( visited[src] )
         return false;
@@ -26,6 +24,4 @@ bool kuhn_max_matching( int src, const vector<vector<int>>& graph, vector<int>& 
     return false;
 }
 
-
-#endif // GRAPH
-
+#endif // BIPARTITE_MATCHING_H

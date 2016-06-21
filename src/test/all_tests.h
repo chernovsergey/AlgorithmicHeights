@@ -1,10 +1,4 @@
-#include "src/include/graph.h"
-#include "src/include/numbers.h"
-#include "src/include/sort.h"
-#include "src/include/str.h"
-#include "src/include/hash.h"
-#include "src/include/list.h"
-#include "src/include/tree.h"
+#include "src/include/include.h"
 
 #include <algorithm>
 
