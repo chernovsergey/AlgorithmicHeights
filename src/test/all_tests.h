@@ -195,93 +195,100 @@ TEST( namespace_seach_sort_select, test_partial_sort )
 TEST( namespace_list, test_linked_list )
 {
     LinkedList<int> l;
-    l.push_back(5);
-    l.push_front(4);
-    l.push_back(6);
-    l.push_front(3);
-    EXPECT_EQ(4, l.size());
+    l.push_back( 5 );
+    l.push_front( 4 );
+    l.push_back( 6 );
+    l.push_front( 3 );
+    EXPECT_EQ( 4, l.size() );
 
     std::cout << l << std::endl;
 
     l.pop_front();
     l.pop_back();
-    EXPECT_EQ(2, l.size());
+    EXPECT_EQ( 2, l.size() );
 
-    EXPECT_EQ(false, l.empty());
+    EXPECT_EQ( false, l.empty() );
 
-    l.push_back(1);
-    l.push_back(2);
-    l.push_back(3);
+    l.push_back( 1 );
+    l.push_back( 2 );
+    l.push_back( 3 );
     l.clear();
-    EXPECT_EQ(0, l.size());
+    EXPECT_EQ( 0, l.size() );
 }
 
-TEST(namespace_trees, test_bst)
+TEST( namespace_trees, test_bst )
 {
     binary_search_tree<int, float> tree;
-    tree.insert(10, 10.1);
-    tree.insert(5, 5.1);
-    tree.insert(15, 15.1);
+    tree.insert( 10, 10.1 );
+    tree.insert( 5, 5.1 );
+    tree.insert( 15, 15.1 );
 
-    EXPECT_EQ(true, tree.contains(5));
-    EXPECT_EQ(true, tree.contains(10));
-    EXPECT_EQ(true, tree.contains(15));
+    EXPECT_EQ( true, tree.contains( 5 ) );
+    EXPECT_EQ( true, tree.contains( 10 ) );
+    EXPECT_EQ( true, tree.contains( 15 ) );
 
-    tree.insert(17, 17.1);
-    tree.insert(13, 13.1);
+    tree.insert( 17, 17.1 );
+    tree.insert( 13, 13.1 );
 
-    tree.insert(7, 7.1);
-    tree.insert(3, 3.1);
+    tree.insert( 7, 7.1 );
+    tree.insert( 3, 3.1 );
 
-    EXPECT_FLOAT_EQ(17.1, tree.find(17));
-    EXPECT_FLOAT_EQ(13.1, tree.find(13));
-    EXPECT_FLOAT_EQ(7.1, tree.find(7));
-    EXPECT_FLOAT_EQ(3.1, tree.find(3));
+    EXPECT_FLOAT_EQ( 17.1, tree.find( 17 ) );
+    EXPECT_FLOAT_EQ( 13.1, tree.find( 13 ) );
+    EXPECT_FLOAT_EQ( 7.1, tree.find( 7 ) );
+    EXPECT_FLOAT_EQ( 3.1, tree.find( 3 ) );
 
 }
 
 
-TEST(namespace_hash, test_bloom_filter)
+TEST( namespace_hash, test_bloom_filter )
 {
-    BloomFilter<std::string> bf_big(1e6);
-    for(size_t i = 0; i < 1e6; ++i)
+    BloomFilter<std::string> bf_big( 1e6 );
+    for( size_t i = 0; i < 1e6; ++i )
     {
-        bf_big.add(std::to_string(i));
+        bf_big.add( std::to_string( i ) );
     }
 
     size_t count = 0;
-    for(size_t i = 2e6; i < 3e6; ++i)
+    for( size_t i = 2e6; i < 3e6; ++i )
     {
-        if(bf_big.maybe_contains(std::to_string(i)))
+        if( bf_big.maybe_contains( std::to_string( i ) ) )
             count += 1;
     }
 
-    float rate = ((float)count) / (float(1e6+(1e6/2)));
-    EXPECT_GE(0.05, rate);
+    float rate = ( ( float )count ) / ( float( 1e6 + ( 1e6 / 2 ) ) );
+    EXPECT_GE( 0.05, rate );
 }
 
 
-TEST(namespace_hash, test_count_min_sketch)
+TEST( namespace_hash, test_count_min_sketch )
 {
-    CountMinSketch<int> sketch(0.01, 0.0001);
+    CountMinSketch<int> sketch( 0.01, 0.0001 );
+    CountMeanMinSketch<int> sketch_mean( 0.01, 0.0001 );
 
-    for(size_t i = 0; i < 10; ++i)
+    auto test_func = []( auto sketch )
     {
-        for(size_t j = 0; j < 100; ++j) sketch.update(10);
-        for(size_t j = 0; j < 200; ++j) sketch.update(20);
-        for(size_t j = 0; j < 300; ++j) sketch.update(30);
-    }
+        for( size_t i = 0; i < 10; ++i )
+        {
+            for( size_t j = 0; j < 100; ++j ) sketch.update( 10 );
+            for( size_t j = 0; j < 200; ++j ) sketch.update( 20 );
+            for( size_t j = 0; j < 300; ++j ) sketch.update( 30 );
+        }
 
 
-    for(size_t i = 0; i < 5e6; ++i)
-    {
-        sketch.update(static_cast<int>(rand() % 5000000));
-    }
+        for( size_t i = 0; i < 5e6; ++i )
+        {
+            sketch.update( static_cast<int>( rand() % 5000000 ) );
+        }
 
-    // after 5e6 + 6e3 updates real counts of 10, 20, 30 are 1001, 2001, 3001
-    // with eps = 0.0001 and delta = 0.01 sketch should have error
-    // no more than 500
-    EXPECT_LE(sketch.count(10) - 1001, 500);
-    EXPECT_LE(sketch.count(20) - 2001, 500);
-    EXPECT_LE(sketch.count(30) - 3001, 500);
+        // after 5e6 + 6e3 updates real counts of 10, 20, 30 are 1001, 2001, 3001
+        // with eps = 0.0001 and delta = 0.01 sketch should have error
+        // no more than 500
+        EXPECT_LE( std::abs( static_cast<int64_t>( sketch.count( 10 ) ) - 1001 ), 500 );
+        EXPECT_LE( std::abs( static_cast<int64_t>( sketch.count( 20 ) ) - 2001 ), 500 );
+        EXPECT_LE( std::abs( static_cast<int64_t>( sketch.count( 30 ) ) - 3001 ), 500 );
+    };
+
+    test_func( sketch );
+    test_func( sketch_mean );
 }
