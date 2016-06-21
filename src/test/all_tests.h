@@ -259,3 +259,29 @@ TEST(namespace_hash, test_bloom_filter)
     float rate = ((float)count) / (float(1e6+(1e6/2)));
     EXPECT_GE(0.05, rate);
 }
+
+
+TEST(namespace_hash, test_count_min_sketch)
+{
+    CountMinSketch<int> sketch(0.01, 0.0001);
+
+    for(size_t i = 0; i < 10; ++i)
+    {
+        for(size_t j = 0; j < 100; ++j) sketch.update(10);
+        for(size_t j = 0; j < 200; ++j) sketch.update(20);
+        for(size_t j = 0; j < 300; ++j) sketch.update(30);
+    }
+
+
+    for(size_t i = 0; i < 5e6; ++i)
+    {
+        sketch.update(static_cast<int>(rand() % 5000000));
+    }
+
+    // after 5e6 + 6e3 updates real counts of 10, 20, 30 are 1001, 2001, 3001
+    // with eps = 0.0001 and delta = 0.01 sketch should have error
+    // no more than 500
+    EXPECT_LE(sketch.count(10) - 1001, 500);
+    EXPECT_LE(sketch.count(20) - 2001, 500);
+    EXPECT_LE(sketch.count(30) - 3001, 500);
+}
